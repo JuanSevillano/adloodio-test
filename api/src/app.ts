@@ -16,6 +16,6 @@ export class App {
 
     listen(port: number) {
         this.app.listen(port)
-        console.log(`listening on port ${port}`)
+        console.log(`[ App.js, 19 ] => listening on port ${port}`)
     }
 }
