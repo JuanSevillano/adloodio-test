@@ -19,6 +19,7 @@ export default class IndexRouter {
 
         this.router.get('/', this.foodController.getMenu)
         this.router.post('/food', this.foodController.createFood)
+        this.router.delete('/food/:id', this.foodController.deleteFood)
     }
 
 

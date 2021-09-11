@@ -53,6 +53,31 @@ export default class FoodController {
     }
 
 
+    deleteFood = async (req: Request, res: Response): Promise<Response> => {
+        try {
+
+            const { id } = req.params
+            const _found = await this.database.foods.findByPk(id)
+
+            if (!_found) {
+                return res.status(404).json({
+                    message: 'No entry with this id was found '
+                })
+            }
+
+            _found.destroy();
+            return res.status(200).json({ message: 'Item removed properly' })
+
+        } catch (error) {
+            return res.status(400).json({
+                message: error
+            })
+        }
+    }
+
+
+
+
 
 
 }
