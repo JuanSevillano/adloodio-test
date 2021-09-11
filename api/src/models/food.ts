@@ -2,7 +2,7 @@ import { Model, DataTypes } from "sequelize";
 import { Sequelize } from "sequelize/types";
 
 
-interface FoodProps {
+export interface FoodProps {
     id: number;
     name: string;
     price: number;
@@ -11,7 +11,7 @@ interface FoodProps {
     available: boolean;
 }
 
-interface FoodI extends Model<FoodProps>, FoodProps { }
+export interface FoodI extends Model<FoodProps>, FoodProps { }
 
 const FoodModel = (sequelize: Sequelize) => sequelize.define<FoodI>('Food', {
     id: {

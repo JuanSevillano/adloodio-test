@@ -1,4 +1,5 @@
 import { Interface } from "readline";
+import { Sequelize } from "sequelize/types";
 import { App } from "./app";
 import MySQLDatabaseService from "./frameworks/mySQLService";
 
@@ -14,10 +15,12 @@ const dbId = process.env.MYSQL_DATABASE || 'adfoodio';
 
 export const run = () => {
 
-  const app: App = new App();
-  app.listen(port as number);
 
-  const foodSQLService: MySQLDatabaseService = new MySQLDatabaseService(dbId, dbUser, dbPassword, dbHost);
+  const mysql: MySQLDatabaseService = new MySQLDatabaseService(dbId, dbUser, dbPassword, dbHost);
+
+
+  const app: App = new App(mysql);
+  app.listen(port as number);
 
 
 

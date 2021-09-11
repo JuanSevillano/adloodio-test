@@ -1,8 +1,9 @@
-import { Sequelize } from 'sequelize';
-import { HasMany } from 'sequelize-typescript';
+
+import { Model, Sequelize } from 'sequelize';
+
 
 import CategoryModel, { CategoryI } from '../models/category';
-import FoodModel from '../models/food';
+import FoodModel, { FoodI, FoodProps } from '../models/food';
 import MealModel from '../models/meal';
 import OrderModel from '../models/order';
 import UserModel from '../models/user';
@@ -26,11 +27,11 @@ export default class MySQLDatabaseService implements Database {
     host: string;
     sequelize: Sequelize;
 
-    // categories?: any;
+    categories?: any;
     // users?: any;
     // orders?: any;
     // meals?: any;
-    // foods?: any;
+    foods?: any;
 
 
     constructor(
@@ -84,7 +85,9 @@ export default class MySQLDatabaseService implements Database {
         orders.belongsTo(users)
         users.hasMany(orders)
 
-        this.sequelize.sync({ force: true })
+        // this.sequelize.sync({ force: true }
+        this.foods = foods;
+        this.categories = categories;
 
     }
 
