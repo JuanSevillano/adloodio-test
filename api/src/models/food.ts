@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize/types";
 
 
 export interface FoodProps {
-    id: number;
+    id?: number;
     name: string;
     price: number;
     description: string;

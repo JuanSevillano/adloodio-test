@@ -2,8 +2,8 @@
 import { Model, Sequelize } from 'sequelize';
 
 
-import CategoryModel, { CategoryI } from '../models/category';
-import FoodModel, { FoodI, FoodProps } from '../models/food';
+import CategoryModel from '../models/category';
+import FoodModel from '../models/food';
 import MealModel from '../models/meal';
 import OrderModel from '../models/order';
 import UserModel from '../models/user';
@@ -28,9 +28,9 @@ export default class MySQLDatabaseService implements Database {
     sequelize: Sequelize;
 
     categories?: any;
-    // users?: any;
-    // orders?: any;
-    // meals?: any;
+    users?: any;
+    orders?: any;
+    meals?: any;
     foods?: any;
 
 
@@ -73,21 +73,29 @@ export default class MySQLDatabaseService implements Database {
 
     initDatabase() {
 
-        const categories = CategoryModel(this.sequelize)
-        const foods = FoodModel(this.sequelize)
-        const users = UserModel(this.sequelize)
-        const meals = MealModel(this.sequelize)
+
+        const categories = CategoryModel(this.sequelize);
+        const foods = FoodModel(this.sequelize);
+        const users = UserModel(this.sequelize);
         const orders = OrderModel(this.sequelize)
+        const meals = MealModel(this.sequelize)
 
-        categories.hasMany(foods)
-        meals.hasOne(foods)
-        orders.hasMany(meals)
-        orders.belongsTo(users)
-        users.hasMany(orders)
-
-        // this.sequelize.sync({ force: true }
-        this.foods = foods;
         this.categories = categories;
+        this.foods = foods;
+        this.users = users;
+        this.orders = orders;
+        this.meals = meals;
+
+        // Maybe some redundance here, I'm not sure actually 
+        this.categories.items = this.categories.hasMany(this.foods);
+        this.foods.category = this.foods.belongsTo(this.categories);
+        this.users.orders = this.users.hasMany(this.orders);
+        this.orders.meals = this.orders.hasMany(this.meals);
+        this.orders.user = this.orders.belongsTo(this.users);
+
+
+        this.sequelize.sync({ force: true });
+
 
     }
 

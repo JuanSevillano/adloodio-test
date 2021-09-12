@@ -6,11 +6,11 @@ type StringOrNull = string | null;
 type NumberOrNull = number | null;
 
 
-interface UserProps {
+export interface UserProps {
     id: NumberOrNull;
     name: string;
     phone: string;
-    email?: StringOrNull;
+    email: StringOrNull;
     blocked: boolean;
 }
 

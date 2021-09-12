@@ -1,4 +1,5 @@
 import { Router } from "express";
+import CategoryController from "../controllers/category.controller";
 import FoodController from "../controllers/food.controller";
 import MySQLDatabaseService from "../frameworks/mySQLService";
 
@@ -9,7 +10,6 @@ export default class IndexRouter {
 
     constructor(database: MySQLDatabaseService) {
         this.foodController = new FoodController(database)
-
         this.router = Router();
         this.routes();
     }
@@ -19,7 +19,11 @@ export default class IndexRouter {
 
         this.router.get('/', this.foodController.getMenu)
         this.router.post('/food', this.foodController.createFood)
+        // this.router.get('/food/:id', this.foodController.createFood)
         this.router.delete('/food/:id', this.foodController.deleteFood)
+
+
+
     }
 
 

@@ -1,8 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import { Sequelize } from "sequelize/types";
 
-interface CategoryProps {
-    id: number;
+export interface CategoryProps {
+    id: number | null;
     name: string;
 }
 

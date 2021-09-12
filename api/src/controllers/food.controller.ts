@@ -41,9 +41,26 @@ export default class FoodController {
     createFood = async (req: Request, res: Response): Promise<Response> => {
         try {
 
-            const newFood: FoodProps = { ...req.body }
-            const _result = await this.database.foods.create(newFood)
-            return res.json(_result)
+            const { category } = req.body;
+
+            if (!category) {
+                return res.status(400).json({ message: 'Bad body request ' });
+            }
+
+            const foodBody: FoodProps = { ...req.body };
+            const query = { where: { name: category } };
+            const _category = await this.database.categories.findOne(query);
+
+            if (!_category) {
+                return res.status(400).json({ message: 'The given Category is not valid' });
+            }
+
+            const newFood: Object = {
+                ...foodBody,
+                CategoryId: _category.id
+            }
+            const _food = await this.database.foods.create({ ...newFood })
+            return res.json(_food)
 
         } catch (error) {
             return res.status(400).json({
@@ -57,12 +74,18 @@ export default class FoodController {
         try {
 
             const { id } = req.params
+
+            if (!id) {
+                return res.status(400).json({
+                    message: 'Bad body request: [ id ] param is missing '
+                });
+            }
             const _found = await this.database.foods.findByPk(id)
 
             if (!_found) {
                 return res.status(404).json({
                     message: 'No entry with this id was found '
-                })
+                });
             }
 
             _found.destroy();
@@ -71,10 +94,12 @@ export default class FoodController {
         } catch (error) {
             return res.status(400).json({
                 message: error
-            })
+            });
         }
     }
 
+
+    //TODO: Update food 
 
 
 
