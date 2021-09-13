@@ -99,9 +99,12 @@ export default class MySQLDatabaseService implements Database {
         this.meals.orders = this.meals.belongsTo(this.orders);
 
 
-
+        users.drop();
+        categories.drop();
+        orders.drop();
         foods.drop();
         meals.drop();
+
         this.sequelize.sync({ force: true });
 
 

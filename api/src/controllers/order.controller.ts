@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import MySQLDatabaseService from "../frameworks/mySQLService";
+import SocketIoService, { SocketMessage } from "../frameworks/socketIoService";
 import { MealI } from "../models/meal";
 import { OrderProps } from "../models/order";
 
@@ -17,10 +18,12 @@ interface Order {
 
 export default class OrderController {
 
+    socket: SocketIoService;
     database: MySQLDatabaseService;
 
-    constructor(database: MySQLDatabaseService) {
+    constructor(database: MySQLDatabaseService, socket: SocketIoService) {
         this.database = database;
+        this.socket = socket;
     }
 
 
@@ -88,7 +91,7 @@ export default class OrderController {
             }
 
             const order = await this.database.orders.create(newOrder)
-
+            let _totalPrice: number = 0
 
             for (const meal of meals) {
 
@@ -103,19 +106,27 @@ export default class OrderController {
                     FoodId: food.id // Association with food // I wasnt able to use Meals as through table :( 
                 })
 
-                newOrder.totalPrice += newMeal.price;
+                _totalPrice += newMeal.price;
                 newOrder.meals.push(newMeal.id)
             }
 
-            // order.setTotalPrice(newOrder.totalPrice)
-            order.setMeals(newOrder.meals)
+            order.totalPrice = _totalPrice;
+            order.setMeals(newOrder.meals);
             order.save();
 
+
+            const notify: SocketMessage = {
+                channel: 'order',
+                action: 'ready',
+                payload: order
+            }
+
+            this.socket.sendMessage(notify);
 
 
             return res.json({ order })
         } catch (error) {
-
+            console.log(error)
             return res.status(500).json(error)
         }
     }
