@@ -8,8 +8,6 @@ import MealModel from '../models/meal';
 import OrderModel from '../models/order';
 import UserModel from '../models/user';
 
-// import Order from '../models/order';
-
 
 export interface Database {
     database: string;
@@ -77,8 +75,8 @@ export default class MySQLDatabaseService implements Database {
         const categories = CategoryModel(this.sequelize);
         const foods = FoodModel(this.sequelize);
         const users = UserModel(this.sequelize);
-        const orders = OrderModel(this.sequelize)
-        const meals = MealModel(this.sequelize)
+        const orders = OrderModel(this.sequelize);
+        const meals = MealModel(this.sequelize);
 
         this.categories = categories;
         this.foods = foods;
@@ -89,11 +87,21 @@ export default class MySQLDatabaseService implements Database {
         // Maybe some redundance here, I'm not sure actually 
         this.categories.items = this.categories.hasMany(this.foods);
         this.foods.category = this.foods.belongsTo(this.categories);
+
         this.users.orders = this.users.hasMany(this.orders);
-        this.orders.meals = this.orders.hasMany(this.meals);
         this.orders.user = this.orders.belongsTo(this.users);
 
+        // Not sure 
+        this.foods.meals = this.foods.hasMany(this.meals);
+        this.meals.foods = this.meals.belongsTo(this.foods);
 
+        this.orders.meals = this.orders.hasMany(this.meals);
+        this.meals.orders = this.meals.belongsTo(this.orders);
+
+
+
+        foods.drop();
+        meals.drop();
         this.sequelize.sync({ force: true });
 
 

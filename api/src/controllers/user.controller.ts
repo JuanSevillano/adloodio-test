@@ -26,7 +26,7 @@ export default class UserController {
 
             const userExist = await this.database.users.findOne({
                 where: [{
-                    phone: phone
+                    email: email
                 }]
             })
 
@@ -47,7 +47,7 @@ export default class UserController {
 
             return res.status(200).json(userCreated)
         } catch (error) {
-            console.log('[ TOMA TU ERROR ]', error)
+
             return res.status(200).json({ message: 'Error bad request' })
         }
     }

@@ -1,11 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 import { Sequelize } from "sequelize/Types";
 
+
 interface MealProps {
-    id: number;
+    id?: number;
     quantity: number;
     price: number;
 }
+
+
 
 export interface MealI extends Model<MealProps>, MealProps { };
 
@@ -17,11 +20,11 @@ const MealModel = (sequelize: Sequelize) => sequelize.define<MealI>("Meal", {
         type: DataTypes.INTEGER
     },
     quantity: {
-        allowNull: true,
+        allowNull: false,
         type: DataTypes.INTEGER
     },
     price: {
-        allowNull: true,
+        allowNull: false,
         type: DataTypes.FLOAT
     }
 })
