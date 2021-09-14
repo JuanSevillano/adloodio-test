@@ -1,0 +1,12 @@
+@import '../../styles/config.scss';
+
+.AppLayout {
+  @include flex-center;
+  width: 100vw;
+  .Nav {
+    width: 100%;
+    .Toolbar {
+      @include flex-row-between;
+    }
+  }
+}

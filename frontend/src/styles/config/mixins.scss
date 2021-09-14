@@ -1,0 +1,119 @@
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@mixin flex-center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-row-between {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+@mixin flex-row-around {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+@mixin flex-colum-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@mixin flex-colum-center-reverse {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+@mixin flex-colum-center-start {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+@mixin flex-colum-between {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@mixin flex-colum-start {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@mixin flex-row-wrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+@mixin flex-colum {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Title */
+
+@mixin title-main {
+  /* TODO: improve this */
+  font-weight: bold;
+}
+
+/* Button */
+
+@mixin cta-style {
+  margin: auto;
+  width: fit-content;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: 2px solid $second-color;
+  background-color: $second-color;
+  border-radius: $radius-card;
+  color: $color-black;
+  transition: all cubic-bezier(0.175, 0.885, 0.32, 1) 1s;
+  &:hover {
+    cursor: pointer;
+    background-color: $transparent;
+  }
+}
+
+/* Form */
+@mixin form-style {
+  @include flex-colum-between;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: $radius-card;
+  background-color: $color-gray;
+  border: 2px solid $primary-color;
+  > p {
+    margin-bottom: -5px;
+  }
+  .Input {
+    border-radius: $radius-card;
+    margin-bottom: 20px;
+  }
+  .Button {
+    @include cta-style;
+    width: 100%;
+    &:disabled {
+      background-color: $color-gray;
+    }
+  }
+}

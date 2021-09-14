@@ -1,21 +1,7 @@
-.App {
-  text-align: center;
-}
+@import '../../styles/config.scss';
 
-.App-logo {
-  width: 55vw;
-  pointer-events: none;
-  margin-bottom: 20px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-fade 2s ease-in-out;
-  }
-}
-
-.App-header {
-  background-color: #EFEFEF;
+.Spinner {
+  background-color: #efefef;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,8 +10,20 @@
   font-size: calc(10px + 2vmin);
   color: #222;
   line-height: calc((10px + 2vmin) * 2);
+  .Logo {
+    width: 55vw;
+    pointer-events: none;
+    margin-bottom: 20px;
+  }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .Spinner {
+    .Logo {
+      animation: App-logo-fade 2s ease-in-out;
+    }
+  }
+}
 
 @keyframes App-logo-fade {
   from {
