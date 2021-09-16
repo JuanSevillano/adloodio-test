@@ -28,8 +28,8 @@ These have been left blank, use your imagination!
 
 | Dessert | Price |
 | ------------- | ------------- |
-| Option A  | 7.20  |
-| Option B  | 7.50 |
-| Option C  | 6.80  |
+| Cheese Cake  | 7.20  |
+| Strawberry flan  | 7.50 |
+| Crema Català | 6.80  |
 
 ## *Hungry Date Offer! Get 2 mains + 2 drinks + 1 dessert for 40.00.*

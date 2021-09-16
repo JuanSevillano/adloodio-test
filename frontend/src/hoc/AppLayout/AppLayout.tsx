@@ -8,30 +8,46 @@ import {
 	List,
 	ListItem,
 	ListItemText,
+	Modal,
+	Snackbar,
 
 } from '@material-ui/core';
 
 import {
 	Menu,
-	ShopOutlined,
+	ShoppingCartRounded,
 } from '@material-ui/icons';
 
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { RouteI } from '../../app/App';
+import { connect } from 'react-redux';
+import { OrderCreated } from '../../store/types/cartTypes';
 
 import classes from './AppLayout.module.scss'
-
 import logo from '../../assets/logo.png'
 
 interface LayoutI {
 	routes: Array<RouteI>;
 	children: any;
+	orders?: OrderCreated[]
 }
 
-const AppLayout = ({ routes, children }: LayoutI) => {
+const AppLayout = ({ routes, children, orders }: LayoutI) => {
 
+
+	const [notify, setNotify] = useState<boolean>(false);
+
+	useEffect(() => {
+
+		if (orders) {
+			const filtered = orders.filter((order: OrderCreated) => order.status !== 0);
+			if (filtered.length > 0 && !notify) {
+				setNotify(true)
+			}
+		}
+
+	}, [orders, notify])
 
 	const history = useHistory()
 	const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -57,7 +73,6 @@ const AppLayout = ({ routes, children }: LayoutI) => {
 		</List>
 	)
 
-
 	return (
 		<div className={classes.AppLayout}>
 			<Drawer onClick={() => setIsOpen(false)} className={classes.Drawer} anchor="left" open={isOpen} onClose={() => setIsOpen(prev => !prev)}>
@@ -72,15 +87,26 @@ const AppLayout = ({ routes, children }: LayoutI) => {
 						<img width="100px" src={logo} alt="AddFoodIo" />
 					</Typography>
 					<IconButton onClick={goToProfileHandler}>
-						<ShopOutlined />
+						<ShoppingCartRounded />
 					</IconButton>
 				</Toolbar>
 			</AppBar>
 			<Container className={classes.Container} >
 				{children}
 			</Container>
-		</div>
+
+			<Snackbar
+				open={notify}
+				autoHideDuration={3000}
+				onClose={() => setNotify(false)}
+				message="Your order is done! You can pick it up :)"
+			/>
+		</div >
 	)
 }
 
-export default AppLayout
+const mapStateToProps = (state: any) => ({
+	orders: state.cart.orders
+})
+
+export default connect(mapStateToProps, null)(AppLayout)

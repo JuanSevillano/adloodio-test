@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { setTimeout } from "timers";
 import MySQLDatabaseService from "../frameworks/mySQLService";
 import SocketIoService, { SocketMessage } from "../frameworks/socketIoService";
 import { MealI } from "../models/meal";
@@ -118,7 +119,10 @@ export default class OrderController {
                 payload: order
             }
 
-            this.socket.sendMessage(notify);
+            // Wait 3sec to send message back
+            setTimeout((): void => {
+                this.socket.sendMessage(notify);
+            }, 3000)
 
 
             return res.json({ order })

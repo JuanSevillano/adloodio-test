@@ -5,10 +5,12 @@ import { AnimatedSwitch } from 'react-router-transition';
 import AppLayout from '../hoc/AppLayout/AppLayout';
 import { Route } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { loadHome } from '../store/actions';
+import { createUser, loadHome } from '../store/actions';
 import { LOAD_PREV_CART } from '../store/types/cartTypes';
+import SocketController from '../socket/socket';
 
 
+import openSocket, { Socket } from 'socket.io-client';
 
 
 const Home = lazy(() => import("../views/Home/Home"));
@@ -38,6 +40,9 @@ const routes: Array<RouteI> = new Array(
 )
 
 
+
+const socket: SocketController = new SocketController('http://localhost:4848')
+
 function App() {
 
   const dispatch = useDispatch()
@@ -45,6 +50,7 @@ function App() {
   useEffect(() => {
     dispatch({ type: LOAD_PREV_CART })
     dispatch(loadHome())
+    dispatch(createUser())
   }, [])
 
   return (

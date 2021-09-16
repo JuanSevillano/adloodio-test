@@ -1,20 +1,16 @@
 
 import { BottomNavigation, BottomNavigationAction, Button, Fade, IconButton } from '@material-ui/core';
-import { DeleteOutlined, FavoriteOutlined, PersonOutlined, PlayCircleFilledOutlined, ShopOutlined } from '@material-ui/icons';
+import { DeleteOutlined, ShoppingCart, PlayCircleFilledOutlined, ShopOutlined } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { purchase } from '../../store/actions/cart';
+import { purchase } from '../../store/actions/';
 import { CartProduct, Order, REMOVE_PRODUCT } from '../../store/types/cartTypes';
 import classes from './Profile.module.scss'
 
 const Profile = ({ cartItems, totalPrice, onDeleteItem, onPurchase }: any) => {
 
-	const [tab, setTab] = useState<number>(0);
-
 
 	const purchaseHandler = (): void => {
-
-
 		const newOrder: Order = {
 			userId: 1,
 			dishes: cartItems,
@@ -22,7 +18,6 @@ const Profile = ({ cartItems, totalPrice, onDeleteItem, onPurchase }: any) => {
 		}
 
 		onPurchase(newOrder)
-
 
 	}
 
@@ -56,18 +51,6 @@ const Profile = ({ cartItems, totalPrice, onDeleteItem, onPurchase }: any) => {
 				onClick={purchaseHandler}
 				variant="contained"
 				color="primary">Order now!</Button>
-			{/* <BottomNavigation
-				value={tab}
-				onChange={(event, newValue) => {
-					setTab(newValue);
-				}}
-				showLabels
-				className={classes.Nav}
-			>
-				<BottomNavigationAction value={0} label="Cart" icon={<ShopOutlined />} />
-				<BottomNavigationAction value={1} label="Menu" icon={<FavoriteOutlined />} />
-				<BottomNavigationAction value={3} label="Orders" icon={<PlayCircleFilledOutlined />} />
-			</BottomNavigation> */}
 		</div>
 	)
 }
