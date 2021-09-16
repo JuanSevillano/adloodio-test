@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import MySQLDatabaseService from "../frameworks/mySQLService";
-import { FoodProps } from "../models/food";
+import { FoodI, FoodProps } from "../models/food";
 
 
 interface Menu {
@@ -14,6 +14,59 @@ export default class FoodController {
 
     constructor(database: MySQLDatabaseService) {
         this.database = database;
+    }
+
+
+
+    findDishByName = async (req: Request, res: Response): Promise<Response> => {
+        try {
+
+
+            const { name } = req.params;
+
+            if (!name) {
+                return res.status(400)
+                    .json({ message: 'Error [name] param is missing ' });
+            }
+
+            const dish = await this.database.foods.findOne({
+                where: [{ name }]
+            });
+
+            return res.status(200).json(dish)
+
+
+        } catch (error) {
+            return res.status(404).json({
+                message: error
+            })
+        }
+    }
+
+
+    findDishById = async (req: Request, res: Response): Promise<Response> => {
+        try {
+
+
+            const { id } = req.params;
+
+            if (!id) {
+                return res.status(400)
+                    .json({ message: 'Error [id] param is missing ' });
+            }
+
+            const dish = await this.database.foods.findOne({
+                where: [{ id }]
+            });
+
+            return res.status(200).json(dish)
+
+
+        } catch (error) {
+            return res.status(404).json({
+                message: error
+            })
+        }
     }
 
     getMenu = async (req: Request, res: Response): Promise<Response> => {

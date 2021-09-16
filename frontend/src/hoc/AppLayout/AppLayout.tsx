@@ -7,14 +7,13 @@ import {
 	IconButton,
 	List,
 	ListItem,
-	ListItemText
+	ListItemText,
+
 } from '@material-ui/core';
 
 import {
 	Menu,
-	Person,
-	PersonOutlined,
-	PlayCircleOutline
+	ShopOutlined,
 } from '@material-ui/icons';
 
 
@@ -23,6 +22,8 @@ import { useHistory } from 'react-router';
 import { RouteI } from '../../app/App';
 
 import classes from './AppLayout.module.scss'
+
+import logo from '../../assets/logo.png'
 
 interface LayoutI {
 	routes: Array<RouteI>;
@@ -37,6 +38,10 @@ const AppLayout = ({ routes, children }: LayoutI) => {
 
 	const menuHandler = (route: string) => {
 		history.push(route)
+	}
+
+	const goToProfileHandler = (): void => {
+		history.push('/profile')
 	}
 
 	const list = (
@@ -58,33 +63,21 @@ const AppLayout = ({ routes, children }: LayoutI) => {
 			<Drawer onClick={() => setIsOpen(false)} className={classes.Drawer} anchor="left" open={isOpen} onClose={() => setIsOpen(prev => !prev)}>
 				{list}
 			</Drawer>
-			<AppBar className={classes.Nav}  >
+			<AppBar elevation={1} className={classes.Nav}  >
 				<Toolbar className={classes.Toolbar}>
 					<IconButton onClick={() => setIsOpen(prev => !prev)}>
 						<Menu />
 					</IconButton>
 					<Typography variant="h6" className={classes.title}>
-						News
+						<img width="100px" src={logo} alt="AddFoodIo" />
 					</Typography>
-					<IconButton>
-						<Person />
+					<IconButton onClick={goToProfileHandler}>
+						<ShopOutlined />
 					</IconButton>
 				</Toolbar>
 			</AppBar>
-			<Container >
+			<Container className={classes.Container} >
 				{children}
-				{/* <BottomNavigation
-				value={value}
-				onChange={(event, newValue) => {
-					setValue(newValue);
-				}}
-				showLabels
-				className={classes.root}
-				>
-				<BottomNavigationAction label="Profile" icon={<PersonOutlined />} />
-				<BottomNavigationAction label="Menu" icon={<FavoriteOutlined />} />
-				<BottomNavigationAction label="Orders" icon={<PlayCircleOutline />} />
-			</BottomNavigation> */}
 			</Container>
 		</div>
 	)

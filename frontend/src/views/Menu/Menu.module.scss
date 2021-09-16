@@ -1,0 +1,27 @@
+@import '../../styles/config.scss';
+
+.Menu {
+  @include flex-colum-between;
+  width: 100%;
+  .Item {
+    @include flex-row-between;
+    width: 100%;
+    height: fit-content;
+    background-size: contain;
+    background-position: center;
+    .Image {
+      @include flex-row-around;
+      max-width: 130px;
+    }
+    h3 {
+      @include title-main;
+    }
+  }
+}
+
+
+@media (min-width: 1079px) {
+  .Menu {
+    @include flex-row-between;
+  }
+}

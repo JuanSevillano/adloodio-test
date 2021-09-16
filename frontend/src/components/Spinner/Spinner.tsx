@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React from 'react';
 import classes from './Spinner.module.scss';
 import logo from '../../assets/logo.png';
 

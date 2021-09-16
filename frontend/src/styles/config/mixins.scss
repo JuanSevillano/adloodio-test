@@ -27,6 +27,22 @@
   justify-content: space-around;
 }
 
+@mixin flex-row-between-center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-row-around-center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
 @mixin flex-colum-center {
   display: flex;
   flex-direction: column;
@@ -72,14 +88,17 @@
 /* Title */
 
 @mixin title-main {
-  /* TODO: improve this */
+  text-transform: uppercase;
   font-weight: bold;
+  font-size: 1.5em;
+  color: $color-black;
+  background-color: $color-white;
 }
 
 /* Button */
 
 @mixin cta-style {
-  margin: auto;
+  margin: 100%;
   width: fit-content;
   padding: 10px 20px;
   font-weight: bold;
@@ -91,29 +110,5 @@
   &:hover {
     cursor: pointer;
     background-color: $transparent;
-  }
-}
-
-/* Form */
-@mixin form-style {
-  @include flex-colum-between;
-  max-width: 400px;
-  padding: 20px;
-  border-radius: $radius-card;
-  background-color: $color-gray;
-  border: 2px solid $primary-color;
-  > p {
-    margin-bottom: -5px;
-  }
-  .Input {
-    border-radius: $radius-card;
-    margin-bottom: 20px;
-  }
-  .Button {
-    @include cta-style;
-    width: 100%;
-    &:disabled {
-      background-color: $color-gray;
-    }
   }
 }

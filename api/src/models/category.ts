@@ -4,6 +4,7 @@ import { Sequelize } from "sequelize/types";
 export interface CategoryProps {
     id: number | null;
     name: string;
+    image_cover: string;
 }
 
 export interface CategoryI extends Model<CategoryProps> { }
@@ -18,6 +19,10 @@ const CategoryModel = (sequelize: Sequelize) => sequelize.define<CategoryI>('Cat
     name: {
         allowNull: false,
         type: new DataTypes.STRING(128)
+    },
+    image_cover: {
+        allowNull: false,
+        type: new DataTypes.STRING(255)
     }
 })
 

@@ -17,12 +17,15 @@ export default class IndexRouter {
 
     routes() {
 
-        this.router.get('/', this.foodController.getMenu)
-        this.router.post('/food', this.foodController.createFood)
-        // this.router.get('/food/:id', this.foodController.createFood)
-        this.router.delete('/food/:id', this.foodController.deleteFood)
+        this.router.get('/', this.foodController.getMenu);
 
+        this.router.post('/food', this.foodController.createFood);
 
+        this.router.get('/food/:id', this.foodController.findDishById);
+
+        this.router.delete('/food/:id', this.foodController.deleteFood);
+
+        this.router.get('/food/name/:id', this.foodController.findDishByName);
 
     }
 

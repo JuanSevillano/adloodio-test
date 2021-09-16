@@ -17,9 +17,13 @@ export default class CategoryRouter {
 
 
     routes() {
-        // this.router.get('/categories', this.foodController.deleteFood)
-        // this.router.get('/category/:id', this.foodController.deleteFood)
-        this.router.get('/', this.controller.getAll)
-        this.router.post('/', this.controller.createCategory)
+
+        this.router.get('/', this.controller.finAdll);
+
+        this.router.get('/:name', this.controller.findOne);
+
+        this.router.post('/', this.controller.createCategory);
+
+
     }
 }

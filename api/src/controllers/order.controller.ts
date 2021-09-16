@@ -68,26 +68,23 @@ export default class OrderController {
         try {
 
 
-            const { email, meals } = req.body;
-            if (!email || !meals) {
+            const { meals } = req.body;
+            if (!meals) {
                 return res.status(400)
-                    .json({ message: `Bad request: [ email: ${email}, meals: ${meals} ] params missing ` });
+                    .json({ message: `Bad request: [ email:  meals: ${meals} ] params missing ` });
             }
 
-            const userExist = await this.database.users.findOne({ where: [{ email: email }] })
-            if (!userExist) {
-                return res.status(403)
-                    .json({ message: 'User is not allowed to order, should register first ' });
-            }
-
-
-
+            // const userExist = await this.database.users.findOne({ where: [{ email: email }] })
+            // if (!userExist) {
+            //     return res.status(403)
+            //         .json({ message: 'User is not allowed to order, should register first ' });
+            // }
 
             const newOrder: Order = {
                 status: 0,
                 meals: [],
                 totalPrice: 0,
-                UserId: userExist.id,
+                UserId: 1, // Fixed user id
             }
 
             const order = await this.database.orders.create(newOrder)

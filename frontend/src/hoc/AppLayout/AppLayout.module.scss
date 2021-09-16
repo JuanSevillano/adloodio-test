@@ -5,19 +5,31 @@
   width: 100vw;
 
   .Nav {
+    @include flex-center;
     width: 100%;
+    min-height: 90px;
     .Toolbar {
       @include flex-row-between;
+      width: 100%;
+
+      img {
+        filter: saturate(0%) invert(1);
+      }
     }
     .DesktopToolbar {
       display: none;
     }
+  }
+
+  .Container {
+    padding-top: 130px;
   }
 }
 
 div[class^='MuiPaper-root'] {
   @include flex-center;
   width: 100%;
+  text-transform: uppercase;
 }
 
 @media (min-width: 500px) {

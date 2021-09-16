@@ -1,11 +1,87 @@
 
-	import React from 'react';
-	import classes from './Profile.module.scss'
+import { BottomNavigation, BottomNavigationAction, Button, Fade, IconButton } from '@material-ui/core';
+import { DeleteOutlined, FavoriteOutlined, PersonOutlined, PlayCircleFilledOutlined, ShopOutlined } from '@material-ui/icons';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { purchase } from '../../store/actions/cart';
+import { CartProduct, Order, REMOVE_PRODUCT } from '../../store/types/cartTypes';
+import classes from './Profile.module.scss'
 
-	const Profile = (props: any) => {
-	    return (
-	    	<div className={classes.Profile}>Profile</div>
-		)
-	 }
+const Profile = ({ cartItems, totalPrice, onDeleteItem, onPurchase }: any) => {
 
-	export default Profile
+	const [tab, setTab] = useState<number>(0);
+
+
+	const purchaseHandler = (): void => {
+
+
+		const newOrder: Order = {
+			userId: 1,
+			dishes: cartItems,
+			price: totalPrice
+		}
+
+		onPurchase(newOrder)
+
+
+	}
+
+
+	const prods = cartItems?.map((item: CartProduct) => (
+		<div className={classes.Item}>
+			<h3>
+				{item.name}
+			</h3>
+			<p>
+				{item.quantity} {item.price * item.quantity}
+			</p>
+			<IconButton onClick={() => onDeleteItem(item.id)} aria-label="delete">
+				<DeleteOutlined />
+			</IconButton>
+		</div>
+	))
+
+	return (
+		<div className={classes.Profile}>
+
+			<section className={classes.List}>
+				<div className={classes.TotalPrice}>
+					<h2>Your current Order</h2>
+					<h3>{totalPrice}</h3>
+				</div>
+				{prods}
+			</section>
+			<Button
+				className={classes.CTA}
+				onClick={purchaseHandler}
+				variant="contained"
+				color="primary">Order now!</Button>
+			{/* <BottomNavigation
+				value={tab}
+				onChange={(event, newValue) => {
+					setTab(newValue);
+				}}
+				showLabels
+				className={classes.Nav}
+			>
+				<BottomNavigationAction value={0} label="Cart" icon={<ShopOutlined />} />
+				<BottomNavigationAction value={1} label="Menu" icon={<FavoriteOutlined />} />
+				<BottomNavigationAction value={3} label="Orders" icon={<PlayCircleFilledOutlined />} />
+			</BottomNavigation> */}
+		</div>
+	)
+}
+
+
+const mapStateToProps = (state: any) => ({
+	cartItems: state.cart.products,
+	totalPrice: state.cart.totalPrice
+})
+
+const mapDispatchToProps = (dispatch: any) => ({
+	onLoadOrders: () => dispatch({ type: 'LOAD_ORDERS', payload: { userId: 1 } }),
+	onDeleteItem: (id: number) => dispatch({ type: REMOVE_PRODUCT, payload: { productId: id } }),
+	onPurchase: (order: Order) => dispatch(purchase(order))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

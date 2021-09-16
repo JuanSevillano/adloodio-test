@@ -1,10 +1,15 @@
 import { combineReducers, createStore, Reducer, compose, applyMiddleware, Store } from "redux";
 import thunk from "redux-thunk";
-import orderReducer from "./reducers/order.reducer";
+
+import cartReducer from "./reducers/cart";
+import homeReducer from "./reducers/home";
+import categoryReducer from "./reducers/category";
 
 
 const rootReducer: Reducer = combineReducers({
-    orders: orderReducer
+    home: homeReducer,
+    cart: cartReducer,
+    category: categoryReducer
 })
 
 const store: Store = createStore(rootReducer, compose(

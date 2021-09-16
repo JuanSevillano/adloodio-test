@@ -11,7 +11,46 @@ export default class CategoryController {
     }
 
 
-    getAll = async (req: Request, res: Response): Promise<Response> => {
+
+    findOne = async (req: Request, res: Response): Promise<Response> => {
+        try {
+
+            const { name } = req.params;
+            if (!name) {
+                return res.status(400)
+                    .json({ message: 'Error, [ name  ] param is missing ' });
+
+            }
+            // Wanst able to make the include structure to retrieve all
+            // connected tables in a query, but here's split in steps..
+            const query = { where: [{ name }] }
+            const category = await this.database.categories.findOne(query);
+
+            if (!category) {
+                return res.status(404)
+                    .json({ message: 'Not category found with given name' });
+            }
+
+            const dishes = await this.database.foods.findAll({
+                where: [{ CategoryId: category.id }]
+            })
+
+
+            const fullCategory = {
+                category,
+                dishes
+            }
+
+            return res.status(200).json(fullCategory)
+
+
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    }
+
+
+    finAdll = async (req: Request, res: Response): Promise<Response> => {
         try {
             const categories = await this.database.categories.findAll();
             return res.status(201).json(categories);
@@ -24,8 +63,8 @@ export default class CategoryController {
     createCategory = async (req: Request, res: Response): Promise<Response> => {
         try {
 
-            const { name } = req.body;
-            if (!name) {
+            const { name, img } = req.body;
+            if (!name || !img) {
                 return res.status(400).json({ message: ' Bad request: [ name ] param missing' });
             }
 
@@ -36,7 +75,7 @@ export default class CategoryController {
                 return res.status(400).json({ message: 'Category exist already ' });
             }
 
-            const _newCategory: CategoryProps = { id: null, name };
+            const _newCategory: CategoryProps = { id: null, name, image_cover: img };
             const category = await this.database.categories.create(_newCategory);
             return res.status(200).json(category);
 

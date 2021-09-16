@@ -1,6 +1,36 @@
+@import '../../styles/config.scss';
 
-	@import '../../styles/config.scss';
-	
-	.DetailProduct{ 
-		display: flex; 
-	}
+.DetailProduct {
+  @include flex-colum;
+  margin-bottom: 50px;
+  .Header {
+    @include flex-colum;
+    .Image {
+      border-radius: $radius-card;
+      width: 100%;
+      height: 250px;
+    }
+    .Price {
+      @include flex-row-between-center;
+      h1 {
+        margin: 10px 0;
+        width: 70%;
+      }
+      h2 {
+        margin: 10px 0;
+        width: 25%;
+      }
+    }
+  }
+}
+
+.Modal {
+  @include flex-center;
+  .Paper {
+    @include flex-colum-between;
+    background-color: $color-white;
+    padding: 20px;
+    width: 80%;
+    height: fit-content;
+  }
+}
