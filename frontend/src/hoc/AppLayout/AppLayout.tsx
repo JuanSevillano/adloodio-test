@@ -13,6 +13,9 @@ import {
 
 } from '@material-ui/core';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+
 import {
 	Menu,
 	ShoppingCartRounded,
@@ -75,7 +78,13 @@ const AppLayout = ({ routes, children, orders }: LayoutI) => {
 
 	return (
 		<div className={classes.AppLayout}>
-			<Drawer onClick={() => setIsOpen(false)} className={classes.Drawer} anchor="left" open={isOpen} onClose={() => setIsOpen(prev => !prev)}>
+			<CssBaseline />
+			<Drawer
+				onClick={() => setIsOpen(false)}
+				className={classes.Drawer}
+				anchor="left"
+				open={isOpen}
+				onClose={() => setIsOpen(prev => !prev)}>
 				{list}
 			</Drawer>
 			<AppBar elevation={1} className={classes.Nav}  >
